@@ -1,0 +1,26 @@
+.title {
+    font-size: 25px;
+    color: cornflowerblue;
+    margin-bottom: 15px;
+    padding: 20px;
+}
+
+.dialogs__container {
+    display: flex;
+}
+
+.dialogs {
+    width: 40%;
+}
+
+.dialogs .active {
+    color: indianred;
+}
+
+.dialogs__item {
+    padding: 5px 0 5px 20px;
+}
+
+.chat {
+    width: 60%;
+}
