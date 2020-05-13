@@ -1,15 +1,41 @@
 import React from 'react';
-import n from './Nav.module.css'
+import styles from './Nav.module.css'
 import { NavLink } from 'react-router-dom';
+import Friends from "./Friends/Friends";
+import {SidebarType} from "../../redux/state";
 
-const Nav = () => {
+type DataStateType = {
+    dataState: SidebarType
+}
+
+const Nav = (props: DataStateType) => {
+    let JSXFriends = props.dataState.friends.map ( d => <Friends friendsName={d.name}/>)
+
     return (
-        <nav className={n.side__bar}>
-            <div className={n.item}><NavLink activeClassName={n.link} to="/profile">Profile</NavLink></div>
-            <div className={n.item}><NavLink activeClassName={n.link} to="/dialogs">Messages</NavLink></div>
-            <div className={n.item}><NavLink activeClassName={n.link} to="/news">News</NavLink></div>
-            <div className={n.item}><NavLink activeClassName={n.link} to="/music">Music</NavLink></div>
-            <div className={`${n.item} ${n.active}`}><NavLink activeClassName={n.link} to="/settings">Settings</NavLink></div>
+        <nav className={styles.side__bar}>
+            <div className={styles.item}>
+                <NavLink activeClassName={styles.link} to="/profile">Profile</NavLink>
+            </div>
+            <div className={styles.item}>
+                <NavLink activeClassName={styles.link} to="/dialogs">Messages</NavLink>
+            </div>
+            <div className={styles.item}>
+                <NavLink activeClassName={styles.link} to="/news">News</NavLink>
+            </div>
+            <div className={styles.item}>
+                <NavLink activeClassName={styles.link} to="/music">Music</NavLink>
+            </div>
+            <div className={`${styles.item} ${styles.active}`}>
+                <NavLink activeClassName={styles.link} to="/settings">Settings</NavLink>
+            </div>
+            <div className={`${styles.item} ${styles.friends}`}>
+                <h3>Friends</h3>
+                <div className={styles.friends__item}>
+
+                    {JSXFriends}
+
+                </div>
+            </div>
         </nav>
     );
 }

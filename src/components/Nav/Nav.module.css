@@ -5,9 +5,11 @@
 
     height: 80vh;
 }
+
 .item {
     padding-bottom: 20px;
 }
+
 .item.active {
     padding-top: 25px;
 }
@@ -20,3 +22,24 @@
 a.link {
     color: indigo;
 }
+
+.item.friends {
+    color: white;
+}
+
+.friends__item {
+    display: flex;
+}
+
+.friends__item div {
+    padding: 0 5px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.friends__block img {
+    width: 30px;
+    height: 30px;
+}
+
+
