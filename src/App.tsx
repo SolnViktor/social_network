@@ -1,23 +1,19 @@
 import React from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
-import Nav from "./components/Nav/Nav";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
 import {Route} from 'react-router-dom';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from './components/Settings/Settings';
-import {addPost, StateType} from "./redux/state";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import NavContainer from "./components/Nav/NavContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 
-type AppPropsType = {
-    state: StateType
-    addPost: () => void
-    updateNewPost: (newText: string) => void
-}
 
-function App(props: AppPropsType) {
+
+function App() {
     return (
         <div className="App">
             <div className="container">
@@ -25,21 +21,18 @@ function App(props: AppPropsType) {
                     <Header/>
                     <div className="main__block">
                         <div className="nav">
-                            <Nav dataState={props.state.sidebar}/>
+                            <NavContainer />
                         </div>
 
                         <div className="content">
                             <Route path='/profile'
-                                   render={() => <Profile
-                                       dataState={props.state.profilePage}
-                                       addPost={addPost}
-                                       updateNewPost={props.updateNewPost}
-                                   />}/>
+                                   render={() => <Profile /> }/>
 
                             <Route path='/dialogs'
-                                   render={() => <Dialogs
-                                       dataState={props.state.messagesPage}/>}/>
+                                   render={() => <DialogsContainer /> } />
 
+                            <Route path='/users'
+                                   render={() => <UsersContainer />  } />
                             <Route path='/news'
                                    render={() => <News/>}/>
                             <Route path='/music'

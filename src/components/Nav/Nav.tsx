@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './Nav.module.css'
 import { NavLink } from 'react-router-dom';
 import Friends from "./Friends/Friends";
-import {SidebarType} from "../../redux/state";
+import {SidebarType} from "../../redux/store";
 
 type DataStateType = {
-    dataState: SidebarType
+    sidebar: SidebarType
 }
 
 const Nav = (props: DataStateType) => {
-    let JSXFriends = props.dataState.friends.map ( d => <Friends friendsName={d.name}/>)
+    let JSXFriends = props.sidebar.friends.map ( d => <Friends friendsName={d.name}/>)
 
     return (
         <nav className={styles.side__bar}>
@@ -18,6 +18,9 @@ const Nav = (props: DataStateType) => {
             </div>
             <div className={styles.item}>
                 <NavLink activeClassName={styles.link} to="/dialogs">Messages</NavLink>
+            </div>
+            <div className={styles.item}>
+                <NavLink activeClassName={styles.link} to="/users">Users</NavLink>
             </div>
             <div className={styles.item}>
                 <NavLink activeClassName={styles.link} to="/news">News</NavLink>

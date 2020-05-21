@@ -6,3 +6,20 @@
 post.item {
     color: white;
 }
+
+.heart {
+ color: #4e4949;
+ font-size: 17px;
+    padding-right: 3px;
+    cursor: pointer;
+}
+
+.heart.heart_liked{
+    color: #c75c5c;
+}
+
+.likes__container {
+ width: 60px;
+    text-align: center;
+}
+

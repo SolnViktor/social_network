@@ -2,8 +2,10 @@
     background-color: cadetblue;
     margin-right: 15px;
     padding: 20px;
-
     height: 80vh;
+    position: fixed;
+    top: 85px;
+    width: 185px;
 }
 
 .item {

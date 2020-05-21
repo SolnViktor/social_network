@@ -1,19 +1,12 @@
-.chat__item {
-
-}
-
-.area {
-
-}
-
-.text {
-    display: block;
-    height: 100%;
-}
-
 .chat {
+ width:auto;
+}
+
+.chat__item {
     padding: 5px;
-    border: solid 3px mediumslateblue;
+    border: solid 2px mediumslateblue;
     margin: 7px 10px 7px 0;
+    background: white;
+    overflow-x:hidden
 
 }

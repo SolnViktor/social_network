@@ -1,49 +1,64 @@
-import React from "react";
+import React, {ChangeEvent, KeyboardEvent} from "react";
 import styles from "./MyPosts.module.css"
 import Post from "./Post/Post";
-import {PostType} from "../../../redux/state";
+import {ProfilePageType} from "../../../redux/store";
 
 
 type DataPostType = {
-    dataPost: Array<PostType>
+    profilePage: ProfilePageType
+    updateNewPostText: (newText: string) => void
     addPost: () => void
-    dataText: string
-    updateNewPost: (newText: string) => void
+    addLike: (id: string) => void
+    decreaseLike: (id: string) => void
 }
 
+function MyPosts(props: DataPostType) {
 
-const MyPosts = (props: DataPostType) => {
-
-    let JSXPost = props.dataPost.map (
+    let JSXPost = props.profilePage.post.map(
         (post) => (
-            <Post message={post.messages} likes={post.likesCount}/>
-            )
+            <Post key={post.id}
+                  message={post.messages}
+                  likes={post.likesCount}
+                  addLike={props.addLike}
+                  decreaseLike={props.decreaseLike}
+                  id={post.id}
+            />
+        )
     )
 
-    let newPostElement: any = React.createRef();
 
-
-    let addPost = () => {
-         props.addPost();
+    function addPost() {
+        props.addPost();
     }
 
-    function onPostChange () {
-        let newText = newPostElement.current.value;
-        props.updateNewPost(newText);
+    function onKeyPressHandler(e: KeyboardEvent<HTMLTextAreaElement>) {
+        if (e.charCode === 13)
+            addPost()
+    }
+
+    function onPostChange(e: ChangeEvent<HTMLTextAreaElement>) {
+        let newText = e.target.value;
+        props.updateNewPostText(newText);
     }
 
     return (
         <div className={styles.blog}>
-            <h3 className={styles.title}>my posts</h3>
+            <h3 className={styles.title}>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}
-                              onChange={onPostChange}
-                              value={props.dataText}/>
+                    <textarea
+                        className={styles.area}
+                        onChange={onPostChange}
+                        value={props.profilePage.newPostText}
+                        onKeyPress={onKeyPressHandler}
+                        cols={110}
+                        rows={5}
+                        placeholder="Your post"
+                    />
                 </div>
 
                 <div>
-                    <button onClick={addPost}>Add Post</button>
+                    <button className={styles.button} onClick={addPost}>Add Post</button>
                 </div>
             </div>
             <div className={styles.posts}>
@@ -52,5 +67,6 @@ const MyPosts = (props: DataPostType) => {
         </div>
     )
 }
+
 export default MyPosts;
 
