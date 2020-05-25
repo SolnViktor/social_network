@@ -28,6 +28,7 @@ export type SidebarType = {
 export type ProfilePageType = {
     post:Array<PostType>
     newPostText: string
+    profile: any
 }
 export type MessagesPageType = {
     dialogs: Array<DialogsType>
@@ -48,7 +49,7 @@ export type StoreType = {
 }
 export type CallSubscriberType = (state: StateType) => void
 
-let store: StoreType = {
+/*let store: StoreType = {
     _state: {
         messagesPage: {
             dialogs: [
@@ -72,7 +73,8 @@ let store: StoreType = {
                 {id: v1(), messages: "How id your it-kamasutra", likesCount: 12},
                 {id: v1(), messages: "I,m okey", likesCount: 5}
             ],
-            newPostText: ''
+            newPostText: '',
+            profile: null
         },
         sidebar: {
             friends: [
@@ -99,11 +101,11 @@ let store: StoreType = {
         this._state.sidebar = sidebarReducer(this._state.sidebar, action);
         this._callSubscriber(this._state);
     }
-}
+}*/
 
 
 
 
 
 
-export default store;
+// export default store;

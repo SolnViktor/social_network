@@ -1,10 +1,48 @@
-
-.img__main {
-    display: block;
-    width: 100%;
-    height: 200px;
+.profile {
+    display: flex;
+    font-size: 23px;
+}
+.line {
+    background-color: black;
+    height: 2px;
+    border: none;
 }
 
-.ava {
-    padding: 10px;
+.avatar {
+    height: auto;
+    max-width: 300px;
+    margin: 15px;
+}
+.ava__img {
+    display: block;
+}
+.description {
+    margin: 15px;
+    width: 100%;
+}
+
+.icon {
+    color: #3770ab;
+    font-size: 30px;
+    padding-left: 20px;
+}
+
+.icon:hover {
+    transition: 0.3s;
+    color: #8735a9;
+}
+
+.icon__search {
+    color: yellowgreen;
+    font-size: 25px;
+    padding-left: 10px;
+}
+.icon__stop {
+    color: grey;
+    font-size: 25px;
+    padding-left: 10px;
+}
+
+.contacts {
+    margin-top: 30px;
 }

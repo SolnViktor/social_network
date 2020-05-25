@@ -1,15 +1,17 @@
-import {ProfilePageType} from "./store";
+import {PostType} from "./store";
 import {v1} from "uuid"
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST = 'UPDATE-NEW-POST';
 const ADD_LIKE = 'ADD-LIKE'
 const DECREASE_LIKE = 'DECREASE-LIKE'
+const SET_USER_PROFILE = 'SET_USER_PROFILE'
 
 export type actionTypeProfile = {
     type: string
     text: string
     id: string
+    profile: any
 }
 
 let initialState = {
@@ -18,7 +20,13 @@ let initialState = {
         {id: v1(), messages: "How are you?", likesCount: 12},
         {id: v1(), messages: "I,m okey", likesCount: 5}
     ],
-    newPostText: ''
+    newPostText: '',
+    profile: null
+}
+export type ProfilePageType = {
+    post:Array<PostType>
+    newPostText: string
+    profile: any
 }
 
 function profileReducer(state: ProfilePageType = initialState, action: actionTypeProfile) {
@@ -58,6 +66,9 @@ function profileReducer(state: ProfilePageType = initialState, action: actionTyp
             decreaseLikeCount.likesCount--;
             return stateCopy;
         }
+        case SET_USER_PROFILE: {
+            return {...state, profile: action.profile}
+        }
         default:
             return state;
     }
@@ -67,26 +78,30 @@ function profileReducer(state: ProfilePageType = initialState, action: actionTyp
 export function addPostActionCreator() {
     return {type: ADD_POST}
 }
-
 export function updateNewPostActionCreator(newText: string) {
     return {
         type: UPDATE_NEW_POST,
         text: newText,
     }
 }
-
 export function addLikeActionCreator(id: string) {
     return {
         type: ADD_LIKE,
         id: id,
     }
 }
-
 export function decreaseLikeActionCreator(id: string) {
     return {
         type: DECREASE_LIKE,
         id: id
     }
 }
+export function setUserProfile(profile: any) {
+    return {
+        type: SET_USER_PROFILE,
+        profile: profile
+    }
+}
+
 
 export default profileReducer;

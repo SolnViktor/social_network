@@ -7,10 +7,11 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
 
 
-function Profile() {
+function Profile(props: any) {
+
     return (
         <div className={styles.main}>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}/>
 
             <MyPostsContainer />
 

@@ -16,7 +16,10 @@ let reducers = combineReducers({
 export type RootState = ReturnType<typeof reducers>
 
 let store = createStore (reducers);
+window.store = store;
 
-
+declare global {
+    interface Window { store: any; }
+}
 
 export default store;
