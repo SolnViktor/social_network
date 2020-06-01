@@ -1,12 +1,23 @@
-
 .header {
     height: 70px;
     margin: 0 0 15px 0;
     background-color: cadetblue;
-
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
 .logo_img {
     height: 100%;
+}
 
+.login__block {
+    align-self: center;
+}
+.login__block a {
+    color: white;
+    text-decoration: none;
+}
+.login__block a:hover {
+    color: black;
 }

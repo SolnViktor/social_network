@@ -16,13 +16,17 @@
     padding-top: 25px;
 }
 
-.item a {
+.link {
     color: white;
     text-decoration: none;
 }
 
-a.link {
+.active__link {
     color: indigo;
+}
+
+.link:hover {
+    color: black;
 }
 
 .item.friends {
