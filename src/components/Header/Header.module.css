@@ -11,13 +11,13 @@
     height: 100%;
 }
 
-.login__block {
+.login_block {
     align-self: center;
 }
-.login__block a {
+.login_block a {
     color: white;
     text-decoration: none;
 }
-.login__block a:hover {
+.login_block a:hover {
     color: black;
 }

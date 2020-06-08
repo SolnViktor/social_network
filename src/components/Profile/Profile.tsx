@@ -9,9 +9,10 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
 function Profile(props: any) {
 
+
     return (
         <div className={styles.main}>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo status={props.status} profile={props.profile} updateStatus={props.updateStatus}/>
 
             <MyPostsContainer />
 

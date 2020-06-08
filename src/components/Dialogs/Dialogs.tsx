@@ -4,13 +4,15 @@ import ChatItem from "./Messages/Messages";
 import Dialog from "./DialogsItem/DialogsItem";
 import {MessagesPageType} from "../../redux/store";
 import TextArea from "./TextArea/TextArea";
+import { Redirect } from 'react-router-dom';
 
 
 
 type DataStateType = {
     dialogsPage: MessagesPageType
-    updateNewMessage: (newMessage: string) => void
-    addMessage: () => void
+    addMessage: (newDialogMessage: string) => void
+    isAuth: boolean
+    resetForm: () => void
 }
 
 
@@ -29,6 +31,7 @@ const Dialogs = (props: DataStateType) => {
     let JSXDialogsNames = props.dialogsPage.dialogs.map( (d: dType) => (<Dialog key={d.id} name={d.name} id={d.id}/>))
 
     let JSXChatMessages = props.dialogsPage.messages.map( (m: mType) => (<ChatItem key={m.id} mess={m.messages}/>))
+    if (!props.isAuth) return <Redirect to={'/login'}/>;
 
     return (
         <div>
@@ -41,9 +44,8 @@ const Dialogs = (props: DataStateType) => {
                 <div className={styles.dialogs__content}>
 
                     <TextArea
-                        updateNewMessage={props.updateNewMessage}
                         addMessage={props.addMessage}
-                        newMessageText={props.dialogsPage.newMessageText}
+                        resetForm={props.resetForm}
                     />
 
                     <div className={styles.chat}>

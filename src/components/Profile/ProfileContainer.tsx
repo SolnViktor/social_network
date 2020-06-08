@@ -1,27 +1,36 @@
 import React from 'react';
-import axios from 'axios'
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reducer";
+import {getStatus, getUser, setUserProfile, updateStatus} from "../../redux/profile-reducer";
 import {RootState} from "../../redux/redux-store";
 import Profile from "./Profile";
-import { withRouter } from 'react-router-dom';
+import { withRouter} from 'react-router-dom';
+import Preloader from "../Common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {compose} from "redux";
+
 
 class ProfileContainer extends React.Component<any, any> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId;
-        if (!userId) userId = 1111;
+        if (!userId) userId = this.props.authId;   // 8403!  this.props.authId  --- ID приходит после отрисовки страницы, при повторном переходи на тсраницу profile все норм
 
-
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then(response => {
-                this.props.setUserProfile(response.data)
-            })
+        this.props.getUser (userId);
+        this.props.getStatus(userId);
     }
 
     render() {
+
         return (
-                <Profile {...this.props} profile={this.props.profile}/>
+            <>
+                {this.props.isFetching? <Preloader/> : ''}
+                <Profile
+                    {...this.props}
+                    profile={this.props.profile}
+                    status={this.props.status}
+                    updateStatus={this.props.updateStatus}
+                />
+                </>
 
         )
     }
@@ -29,8 +38,21 @@ class ProfileContainer extends React.Component<any, any> {
 
 let mapStateToProps = (state: RootState) => ({
     profile: state.profilePage.profile,
+    isFetching: state.profilePage.isFetching,
+    status: state.profilePage.status,
+    authId: state.auth.id
 });
 
-let WidthUrlDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, {setUserProfile}) (WidthUrlDataContainerComponent);
+export default compose<any>(
+    connect(mapStateToProps, {setUserProfile, getUser, getStatus, updateStatus}),
+    withAuthRedirect,
+    withRouter)
+(ProfileContainer);
+
+
+// let AuthRedirectComponent:any = withAuthRedirect(ProfileContainer);
+//
+// let WithUrlDataContainerComponent:any = withRouter(AuthRedirectComponent)
+//
+// export default connect(mapStateToProps, {setUserProfile, getUser}) (WithUrlDataContainerComponent);

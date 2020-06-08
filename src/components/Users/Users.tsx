@@ -3,7 +3,8 @@ import {UsersType} from "../../redux/users-reducer";
 import styles from "./Users.module.scss"
 import userAva from '../../accets/default_users_ava/user_ava.jpg'
 import { NavLink } from 'react-router-dom';
-import {followAPI} from "../../api/api";
+
+
 
 type UsersPageType = {
     users: Array<UsersType>
@@ -13,8 +14,7 @@ type UsersPageType = {
     totalUserCount: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
-    followIsFetching: (followingInProgress: boolean) => void
-    followingInProgress: boolean
+    followingInProgress: any
 }
 
 function Users (props: UsersPageType) {
@@ -30,10 +30,10 @@ function Users (props: UsersPageType) {
         <div>
             <div>
                 {pages.map( (p, i) => {
-                    return <span onClick={() => {
-                        props.onPageChanged(p)
-                    }}
-                                 className={props.currentPage === p ? `${styles.current_page} ${styles.page_number}` : styles.page_number}>{p},
+                    return <span onClick={() => {props.onPageChanged(p)}}
+                                 className={props.currentPage === p
+                                     ? `${styles.current_page} ${styles.page_number}`
+                                     : styles.page_number}>{p},
                     </span>
                 })}
             </div>
@@ -46,28 +46,16 @@ function Users (props: UsersPageType) {
                                      alt=""/>
                                 </NavLink>
                                 {u.followed
-                                    ? <button disabled={props.followingInProgress} onClick={() => {
-
-                                        props.followIsFetching(true)
-                                        followAPI.unFollowUser(u.id).then(resultCode => {
-                                                if(resultCode == 0) {
-                                                    props.unFollow(u.id)
-                                                }
-                                            props.followIsFetching(false)
-                                            })
-
-                                    }} className={props.followingInProgress? `${styles.button} ${styles.disabled}` : styles.button}>Unfollow</button>
-                                    : <button disabled={props.followingInProgress} onClick={() => {
-
-                                        props.followIsFetching(true)
-                                        followAPI.followUser(u.id).then(resultCode => {
-                                                if(resultCode == 0) {
-                                                    props.follow(u.id)
-                                                }
-                                            props.followIsFetching(false)
-                                            })
-
-                                    }} className={props.followingInProgress? `${styles.button} ${styles.disabled}` : styles.button}> Follow </button>}
+                                    ? <button disabled={props.followingInProgress.some( (id:number) => id === u.id)}
+                                              onClick={() => {props.unFollow(u.id)}}
+                                              className={props.followingInProgress.some( (id:number) => id === u.id)
+                                                  ? `${styles.button} ${styles.disabled}`
+                                                  : styles.button}>Unfollow</button>
+                                    : <button disabled={props.followingInProgress.some( (id:number) => id === u.id)}
+                                              onClick={() => {props.follow(u.id)}}
+                                              className={props.followingInProgress.some( (id:number) => id === u.id)
+                                                  ? `${styles.button} ${styles.disabled}`
+                                                  : styles.button}> Follow </button>}
                             </div>
                             <div className={styles.user_description}>
                                 <div className={styles.name}>

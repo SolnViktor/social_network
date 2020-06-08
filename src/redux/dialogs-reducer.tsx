@@ -1,12 +1,17 @@
-import {MessagesPageType} from "./store";
+import {DialogsType, MessagesType} from "./store";
 import {v1} from "uuid";
 
 const ADD_MESSAGE: string = 'ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE: string = 'UPDATE-NEW-MESSAGE';
+
 
 export type actionTypeDialogs = {
     type: string
     message: string
+    newDialogMessage: string
+}
+export type MessagesPageType = {
+    dialogs: Array<DialogsType>
+    messages:Array<MessagesType>
 }
 
 let initialState = {
@@ -22,24 +27,17 @@ let initialState = {
         {id: v1(), messages: "Hi"},
         {id: v1(), messages: "How about play footble tomorrow?"},
         {id: v1(), messages: "Ye, go"},
-    ],
-    newMessageText: ''
+    ]
 }
 
 function dialogsReducer(state: MessagesPageType = initialState, action: actionTypeDialogs) {
 
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE:
-            return {
-                ...state,
-                newMessageText: action.message
-            };
         case ADD_MESSAGE:
-            let text = state.newMessageText
             return {
                 ...state,
                 newMessageText: '',
-                messages: [...state.messages, {id: v1(), messages: text}]
+                messages: [...state.messages, {id: v1(), messages: action.newDialogMessage}]
             }
         default:
             return state;
@@ -48,24 +46,16 @@ function dialogsReducer(state: MessagesPageType = initialState, action: actionTy
 
 interface AddMessageActionCreatorType {
     type: typeof ADD_MESSAGE
+    newDialogMessage: string
 }
 
-interface UpdateNewMessageActionCreatorType {
-    type: typeof UPDATE_NEW_MESSAGE
-    message: string
+
+export type MessageActionCreatorType = AddMessageActionCreatorType
+
+export function addMessageActionCreator(newDialogMessage: string): MessageActionCreatorType {
+    return {type: ADD_MESSAGE, newDialogMessage}
 }
 
-export type MessageActionCreatorType = AddMessageActionCreatorType | UpdateNewMessageActionCreatorType
 
-export function addMessageActionCreator(): MessageActionCreatorType {
-    return {type: ADD_MESSAGE}
-}
-
-export function updateNewMessageActionCreator(newMessage: string): MessageActionCreatorType {
-    return {
-        type: UPDATE_NEW_MESSAGE,
-        message: newMessage,
-    }
-}
 
 export default dialogsReducer;

@@ -6,8 +6,8 @@ import {
     addLikeActionCreator,
     addPostActionCreator,
     decreaseLikeActionCreator,
-    updateNewPostActionCreator
 } from "../../../redux/profile-reducer";
+import {reset} from "redux-form";
 
 
 function mapStateToProps(state: RootState) {
@@ -18,18 +18,19 @@ function mapStateToProps(state: RootState) {
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        updateNewPostText: (newText: string) => {
-            dispatch(updateNewPostActionCreator(newText));
-        },
-        addPost: () => {
-            dispatch(addPostActionCreator());
+        addPost: (newPost: string) => {
+            dispatch(addPostActionCreator(newPost));
         },
         addLike: (id: string) => {
             dispatch(addLikeActionCreator(id));
         },
         decreaseLike: (id: string) => {
             dispatch(decreaseLikeActionCreator(id))
+        },
+        resetForm: () => {
+            dispatch(reset('myPosts'));
         }
+
     }
 }
 

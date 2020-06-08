@@ -1,46 +1,54 @@
 .profile {
-    display: flex;
     font-size: 23px;
+
+    display: flex;
 }
+
 .line {
-    background-color: black;
     height: 2px;
     border: none;
+    background-color: black;
 }
 
 .avatar {
-    height: auto;
     max-width: 300px;
+    height: auto;
     margin: 15px;
 }
+
 .ava__img {
     display: block;
 }
+
 .description {
-    margin: 15px;
     width: 100%;
+    margin: 15px;
 }
 
 .icon {
-    color: #3770ab;
     font-size: 30px;
     padding-left: 20px;
+
+    color: #3770ab;
 }
 
 .icon:hover {
-    transition: 0.3s;
+    transition: .3s;
     color: #8735a9;
 }
 
 .icon__search {
+    font-size: 25px;
+    padding-left: 10px;
+
     color: yellowgreen;
-    font-size: 25px;
-    padding-left: 10px;
 }
+
 .icon__stop {
-    color: grey;
     font-size: 25px;
     padding-left: 10px;
+
+    color: grey;
 }
 
 .contacts {

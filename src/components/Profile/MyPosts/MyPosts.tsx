@@ -1,21 +1,24 @@
-import React, {ChangeEvent, KeyboardEvent} from "react";
+import React from "react";
 import styles from "./MyPosts.module.css"
 import Post from "./Post/Post";
-import {ProfilePageType} from "../../../redux/store";
+import {reduxForm, Field} from 'redux-form'
+import {ProfilePageType} from "../../../redux/profile-reducer";
+import {maxLengthCreator, required} from '../../../utils/validators/validators'
+import {Textarea} from "../../Common/FormsControls/FormsControl";
 
 
 type DataPostType = {
     profilePage: ProfilePageType
-    updateNewPostText: (newText: string) => void
-    addPost: () => void
+    addPost: (value: string) => void
     addLike: (id: string) => void
     decreaseLike: (id: string) => void
+    resetForm: (form:string) => void
 }
 
 function MyPosts(props: DataPostType) {
 
     let JSXPost = props.profilePage.post.map(
-        (post) => (
+        (post: any) => (
             <Post key={post.id}
                   message={post.messages}
                   likes={post.likesCount}
@@ -27,46 +30,41 @@ function MyPosts(props: DataPostType) {
     )
 
 
-    function addPost() {
-        props.addPost();
-    }
-
-    function onKeyPressHandler(e: KeyboardEvent<HTMLTextAreaElement>) {
-        if (e.charCode === 13)
-            addPost()
-    }
-
-    function onPostChange(e: ChangeEvent<HTMLTextAreaElement>) {
-        let newText = e.target.value;
-        props.updateNewPostText(newText);
+    const addPostBody = (value: any) => {
+        props.addPost(value.post);
+        props.resetForm('myPosts');
     }
 
     return (
         <div className={styles.blog}>
             <h3 className={styles.title}>My posts</h3>
-            <div>
-                <div>
-                    <textarea
-                        className={styles.area}
-                        onChange={onPostChange}
-                        value={props.profilePage.newPostText}
-                        onKeyPress={onKeyPressHandler}
-                        cols={110}
-                        rows={5}
-                        placeholder="Your post"
-                    />
-                </div>
-
-                <div>
-                    <button className={styles.button} onClick={addPost}>Add Post</button>
-                </div>
-            </div>
+            <PostFormRedux onSubmit={addPostBody}/>
             <div className={styles.posts}>
                 {JSXPost}
             </div>
         </div>
     )
 }
-
 export default MyPosts;
+
+const maxLength10 = maxLengthCreator(50);
+
+const PostsForm = (props: any) => {
+
+    return (
+        <form onSubmit={props.handleSubmit}>
+                <Field
+                    name={"post"}
+                    component={Textarea}
+                    className={styles.area}
+                    validate={[required, maxLength10]}
+                />
+                <button className={styles.button}>Add Post</button>
+        </form>
+    )
+}
+let PostFormRedux = reduxForm({form: 'myPosts'})(PostsForm);
+
+
+
 

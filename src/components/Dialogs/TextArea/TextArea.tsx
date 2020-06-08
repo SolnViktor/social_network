@@ -1,54 +1,51 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
-import styles from './TextArea.module.css'
+import React from 'react';
+import styles from './TextArea.module.css';
+import {Field, reduxForm} from 'redux-form'
+import {Textarea} from "../../Common/FormsControls/FormsControl";
+import {maxLengthCreator, required} from "../../../utils/validators/validators";
 
 
 type DispatchType = {
-    newMessageText: string
-    updateNewMessage: (newMessage: string) => void
-    addMessage: () => void
+    addMessage: (newDialogMessage: string) => void
+    resetForm: () => void
 }
 
 function TextArea(props: DispatchType) {
 
-    function addMessage() {
-        props.addMessage();
+
+    const addMessageBody = (value: any) => {
+        console.log(value.dialog)
+        props.addMessage(value.dialog)
+        props.resetForm();
     }
 
-    function onKeyPressHandler(e: KeyboardEvent<HTMLTextAreaElement>) {
-        if (e.charCode === 13) {
-            addMessage()
-        }
-    }
-
-    function onMessageChange(e: ChangeEvent<HTMLTextAreaElement>) {
-        let newMessage = e.target.value;
-        props.updateNewMessage(newMessage);
-    }
 
 
     return (
         <div className={styles.content}>
-
-                <textarea
-                    className={styles.area}
-                    onChange={onMessageChange}
-                    onKeyPress={onKeyPressHandler}
-                    value={props.newMessageText}
-                    placeholder="Your message"
-                    name="" id=""
-                    cols={110}
-                    rows={5}
-                />
-
-            <button
-                onClick={addMessage}
-                className={styles.button}
-            >
-                Add message
-            </button>
+            <DialogsReduxForm onSubmit={addMessageBody}/>
         </div>
     )
 }
+const maxLength10 = maxLengthCreator(50);
+
+const DialogsForm = (props: any) => {
+
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field
+                name={"dialog"}
+                component={Textarea}
+                validate={[required, maxLength10]}
+                placeholder="Your message"/>
+            <button className={styles.button}>
+                Add message
+            </button>
+        </form>
+    )
+}
+
+const DialogsReduxForm = reduxForm({form:'dialog'})(DialogsForm);
 
 
 export default TextArea;

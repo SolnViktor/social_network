@@ -4,6 +4,7 @@ import Preloader from "../../Common/Preloader/Preloader";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faVk, faTwitter, faFacebookF, faInstagram, faGithubSquare} from '@fortawesome/free-brands-svg-icons';
 import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
+import ProfileStatus from './ProfileStatus'
 
 
 type ProfileInfoType = {
@@ -16,6 +17,8 @@ type ProfileInfoType = {
         userId: number
         photos: any
     }
+    status: string
+    updateStatus: (status: string) => void
 }
 
 const ProfileInfo = (props: ProfileInfoType) => {
@@ -30,6 +33,7 @@ const ProfileInfo = (props: ProfileInfoType) => {
             </div>
             <div className={styles.description}>
                 <div>Nick: <span >{props.profile.fullName}</span></div>
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                 <hr className={styles.line}/>
 
                 <div>Search for a job: {props.profile.lookingForAJob
@@ -55,9 +59,7 @@ const ProfileInfo = (props: ProfileInfoType) => {
                     <a href='https://github.com' target="_blank">
                         < FontAwesomeIcon icon={faGithubSquare} className={styles.icon}/>
                     </a>
-
                 </div>
-
             </div>
 
 

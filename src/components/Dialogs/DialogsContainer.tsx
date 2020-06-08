@@ -2,27 +2,36 @@ import React from 'react';
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {RootState} from "../../redux/redux-store";
-import {addMessageActionCreator, updateNewMessageActionCreator} from "../../redux/dialogs-reducer";
+import {addMessageActionCreator} from "../../redux/dialogs-reducer";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {compose} from "redux";
+import {reset} from "redux-form";
 
 
 function mapStateToProps (state: RootState) {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
     }
 }
 function mapDispatchToProps (dispatch: any) {
     return {
-        updateNewMessage: (newMessage: string) => {
-            dispatch(updateNewMessageActionCreator(newMessage));
-        },
-        addMessage: () => {
-            dispatch(addMessageActionCreator());
-        }
+        addMessage: (newDialogMessage: string) => {
+            dispatch(addMessageActionCreator(newDialogMessage));
 
+        },
+        resetForm:() => {
+            dispatch(reset('dialog'))}
     }
 }
 
-const DialogsContainer = connect (mapStateToProps, mapDispatchToProps)(Dialogs);
+
+
+
+
+const DialogsContainer:any = compose(
+    connect (mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(Dialogs);
 
 
 export default DialogsContainer;

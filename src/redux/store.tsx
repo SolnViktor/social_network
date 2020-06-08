@@ -25,29 +25,29 @@ export type FriendsType = {
 export type SidebarType = {
     friends: Array<FriendsType>
 }
-export type ProfilePageType = {
-    post:Array<PostType>
-    newPostText: string
-    profile: any
-}
+// export type ProfilePageType = {
+//     post:Array<PostType>
+//     newPostText: string
+//     profile: any
+// }
 export type MessagesPageType = {
     dialogs: Array<DialogsType>
     messages:Array<MessagesType>
     newMessageText: string
 }
-export type StateType = {
-    messagesPage: MessagesPageType
-    profilePage: ProfilePageType
-    sidebar: SidebarType
-}
-export type StoreType = {
-    _state: StateType
-    _callSubscriber: CallSubscriberType
-    subscribe: (observer: () => void) => void
-    getState: () => StateType
-    dispatch: (action: any) => void
-}
-export type CallSubscriberType = (state: StateType) => void
+// export type StateType = {
+//     messagesPage: MessagesPageType
+//     profilePage: ProfilePageType
+//     sidebar: SidebarType
+// }
+// export type StoreType = {
+//     _state: StateType
+//     _callSubscriber: CallSubscriberType
+//     subscribe: (observer: () => void) => void
+//     getState: () => StateType
+//     dispatch: (action: any) => void
+// }
+// export type CallSubscriberType = (state: StateType) => void
 
 /*let store: StoreType = {
     _state: {
