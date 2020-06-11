@@ -26,6 +26,7 @@ export type UsersStateType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: any
+    portionPages: number
 }
 export type ActionTypeUsers = {
     type: string
@@ -39,8 +40,9 @@ export type ActionTypeUsers = {
 
 let initialState = {
     users: [],
-    pageSize: 5,
     totalUserCount: 0,
+    pageSize: 10,
+    portionPages: 10,
     currentPage: 1,
     isFetching: true,
     followingInProgress: []

@@ -4,9 +4,7 @@ import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from './components/Settings/Settings';
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from "./components/Login/Login";
 import {connect, Provider} from "react-redux";
@@ -15,6 +13,9 @@ import {initializeApp} from "./redux/app-reducer";
 import store, {RootState} from "./redux/redux-store";
 import Preloader from './components/Common/Preloader/Preloader';
 import Nav from './components/Nav/Nav';
+import {withSuspense} from "./components/Common/withSuspense/WithSuspense";
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 
 
 class App extends React.Component<any, any> {
@@ -38,10 +39,11 @@ class App extends React.Component<any, any> {
 
                             <div className="content">
                                 <Route path='/profile/:userId?'
-                                       render={() => <ProfileContainer/>}/>
+                                       render={withSuspense (ProfileContainer) } />
 
                                 <Route path='/dialogs'
-                                       render={() => <DialogsContainer/>}/>
+                                       render={withSuspense (DialogsContainer) } />
+
 
                                 <Route path='/users'
                                        render={() => <UsersContainer/>}/>
@@ -75,7 +77,7 @@ let MainApp = () => {
         <BrowserRouter>
             <Provider store={store}>
                 <React.StrictMode>
-                    <AppContainer />
+                    <AppContainer/>
                 </React.StrictMode>
             </Provider>
         </ BrowserRouter>

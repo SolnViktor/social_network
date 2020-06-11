@@ -13,14 +13,15 @@ type UsersPageType = {
     currentPage: number
     onPageChanged: (pageNumber: number) => void
     followingInProgress: any
+    portionPages: number
 }
 
-function Users({currentPage, onPageChanged, totalUserCount, pageSize, users, ...props}: UsersPageType) {
+function Users({currentPage, onPageChanged, totalUserCount, pageSize, users, portionPages, ...props}: UsersPageType) {
 
     return (
         <div>
             <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
-                       totalUserCount={totalUserCount} pageSize={pageSize}/>
+                       totalUserCount={totalUserCount} pageSize={pageSize} portionPages={portionPages}/>
             {users.map((u: any) =>
                     <User key={u.id}
                                          user={u}
