@@ -1,16 +1,23 @@
-.formControl{
+.formControl {
 
   & textarea {
     border: 2px solid mediumslateblue;
     resize: none;
     margin-right: 10px
   }
+
   &.error input,
   &.error textarea {
     border: solid red 2px;
   }
-  &.error span{
+
+  &.error span {
     color: red;
   }
 }
 
+.errorMessage {
+  margin: 10px;
+  border: 2px solid red;
+  color: red;
+}

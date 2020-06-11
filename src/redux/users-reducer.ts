@@ -1,4 +1,5 @@
 import {followAPI, userAPI} from "../api/api";
+import {updateObjectInArray} from "../utils/object-helpers";
 
 
 const FOLLOW = 'FOLLOW';
@@ -51,23 +52,13 @@ function usersReducer(state: UsersStateType = initialState, action: ActionTypeUs
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userID) {
-                        return {...u, followed: true}
-                    }
-                    return u;
-                })
+                users: updateObjectInArray(state.users, action.userID, "id",{followed: true}) // Объеденили follow unfollow вынесли логику в ./object-helpers
             }
 
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userID) {
-                        return {...u, followed: false}
-                    }
-                    return u;
-                })
+                users: updateObjectInArray(state.users, action.userID, "id",{followed: false})
             }
 
         case SET_USERS: {
@@ -97,8 +88,8 @@ function usersReducer(state: UsersStateType = initialState, action: ActionTypeUs
 }
 
 
-export const followSuccess = (userID: string) => ({type: FOLLOW, userID: userID})
-export const unfollowSuccess = (userID: string) => ({type: UNFOLLOW, userID: userID})
+export const followSuccess = (userID: string) => ({type: FOLLOW, userID})
+export const unfollowSuccess = (userID: string) => ({type: UNFOLLOW, userID})
 export const setUsers = (users: Array<UsersType>) => ({type: SET_USERS, users})
 export const changeCurrentPage = (currentPage: number) => ({type: CURRENT_PAGE, currentPage})
 export const setTotalUsersCount = (totalCount: number) => ({type: TOTAL_USER_COUNT, totalCount})
@@ -109,36 +100,32 @@ export const followIsFetching = (followingInProgress: boolean, userID: any) => (
     userID
 })
 
-export const getUsers = (currentPage: number, pageSize: number) => {
-    return (dispatch: any) => {
+export const getUsers = (page: number, pageSize: number) => {
+    return async (dispatch: any) => {
         dispatch(toggleIsFetching(true));
-        userAPI.getUsers(currentPage, pageSize).then(data => {
-            dispatch(toggleIsFetching(false));
-            dispatch(setUsers(data.items));
-            dispatch(setTotalUsersCount(data.totalCount));
-            dispatch(changeCurrentPage(currentPage));
-        });
+        let response = await userAPI.getUsers(page, pageSize)
+        dispatch(toggleIsFetching(false));
+        dispatch(setUsers(response.items));
+        dispatch(setTotalUsersCount(response.totalCount));
+        dispatch(changeCurrentPage(page));
     }
 }
 
-export const follow = (userID: string) => (dispatch: any) => {
-    dispatch(followIsFetching(true, userID));
-    followAPI.followUser(userID).then(resultCode => {
-        if (resultCode == 0) {
-            dispatch(followSuccess(userID))
-        }
-        dispatch(followIsFetching(false, userID));
-    })
+export const follow = (userID: string) => async (dispatch: any) => {
+    followUnollowFlow(userID, dispatch, followAPI.followUser.bind(followAPI), followSuccess);   // apiMethod & actionCreator переменые для followUnollowFlow
 }
 
-export const unFollow = (userID: string) => (dispatch: any) => {
+export const unFollow = (userID: string) => async (dispatch: any) => {
+    followUnollowFlow(userID, dispatch, followAPI.unFollowUser.bind(followAPI), unfollowSuccess);  // apiMethod & actionCreator переменые для followUnollowFlow
+}
+
+export const followUnollowFlow = async (userID: string, dispatch: any, apiMethod: any, actionCreator: any) => {   //объеденяет follow & unfollow
     dispatch(followIsFetching(true, userID));
-    followAPI.unFollowUser(userID).then(resultCode => {
-        if (resultCode == 0) {
-            dispatch(unfollowSuccess(userID))
-        }
-        dispatch(followIsFetching(false, userID));
-    })
+    let response = await apiMethod(userID);
+    if (response === 0) {
+        dispatch(actionCreator(userID))
+    }
+    dispatch(followIsFetching(false, userID));
 }
 
 

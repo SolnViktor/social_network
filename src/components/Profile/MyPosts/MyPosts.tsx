@@ -1,23 +1,25 @@
 import React from "react";
 import styles from "./MyPosts.module.css"
 import Post from "./Post/Post";
-import {reduxForm, Field} from 'redux-form'
-import {ProfilePageType} from "../../../redux/profile-reducer";
+import {Field, reduxForm} from 'redux-form'
 import {maxLengthCreator, required} from '../../../utils/validators/validators'
 import {Textarea} from "../../Common/FormsControls/FormsControl";
+import {PostType} from "../../../redux/store";
 
 
 type DataPostType = {
-    profilePage: ProfilePageType
+    profilePagePosts: Array<PostType>
     addPost: (value: string) => void
     addLike: (id: string) => void
     decreaseLike: (id: string) => void
     resetForm: (form:string) => void
 }
 
-function MyPosts(props: DataPostType) {
+const MyPosts = React.memo ((props: DataPostType) => {
 
-    let JSXPost = props.profilePage.post.map(
+
+
+    let MappedPost = [...props.profilePagePosts].reverse().map(
         (post: any) => (
             <Post key={post.id}
                   message={post.messages}
@@ -40,11 +42,12 @@ function MyPosts(props: DataPostType) {
             <h3 className={styles.title}>My posts</h3>
             <PostFormRedux onSubmit={addPostBody}/>
             <div className={styles.posts}>
-                {JSXPost}
+                {MappedPost}
             </div>
         </div>
     )
-}
+})
+
 export default MyPosts;
 
 const maxLength10 = maxLengthCreator(50);

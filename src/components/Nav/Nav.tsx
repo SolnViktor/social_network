@@ -1,13 +1,11 @@
 import React from 'react';
 import styles from './Nav.module.css'
 import { NavLink } from 'react-router-dom';
-import {SidebarType} from "../../redux/store";
 
-type DataStateType = {
-    sidebar: SidebarType
-}
 
-const Nav = (props: DataStateType) => {
+
+
+const Nav = () => {
 
 
     return (

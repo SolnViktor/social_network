@@ -1,4 +1,3 @@
-import React from "react";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {RootState} from "../../../redux/redux-store";
@@ -12,7 +11,7 @@ import {reset} from "redux-form";
 
 function mapStateToProps(state: RootState) {
     return {
-        profilePage: state.profilePage
+        profilePagePosts: state.profilePage.post
     }
 }
 

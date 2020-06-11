@@ -13,7 +13,12 @@ class ProfileContainer extends React.Component<any, any> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId;
-        if (!userId) userId = this.props.authId;   // 8403!  this.props.authId  --- ID приходит после отрисовки страницы, при повторном переходи на тсраницу profile все норм
+        if (!userId) {
+            userId = this.props.authId;
+            // if(!userId) {
+            //     this.props.history.push("/login");  // Альтернатива редиректа, но при этом данный компонент не демонтируется! Вариант не айс
+            // }
+        }
 
         this.props.getUser (userId);
         this.props.getStatus(userId);

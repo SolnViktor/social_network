@@ -4,7 +4,7 @@ import {v1} from "uuid";
 const ADD_MESSAGE: string = 'ADD-MESSAGE';
 
 
-export type actionTypeDialogs = {
+export type ActionTypeDialogs = {
     type: string
     message: string
     newDialogMessage: string
@@ -30,7 +30,7 @@ let initialState = {
     ]
 }
 
-function dialogsReducer(state: MessagesPageType = initialState, action: actionTypeDialogs) {
+function dialogsReducer(state: MessagesPageType = initialState, action: ActionTypeDialogs) {
 
     switch (action.type) {
         case ADD_MESSAGE:

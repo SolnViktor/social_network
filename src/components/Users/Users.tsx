@@ -1,9 +1,7 @@
 import React from 'react';
 import {UsersType} from "../../redux/users-reducer";
-import styles from "./Users.module.scss"
-import userAva from '../../accets/default_users_ava/user_ava.jpg'
-import { NavLink } from 'react-router-dom';
-
+import Paginator from "../Common/Paginator/Paginator";
+import User from "./User";
 
 
 type UsersPageType = {
@@ -17,64 +15,22 @@ type UsersPageType = {
     followingInProgress: any
 }
 
-function Users (props: UsersPageType) {
-
-
-    let pagesCount = Math.ceil(props.totalUserCount / props.pageSize)
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
+function Users({currentPage, onPageChanged, totalUserCount, pageSize, users, ...props}: UsersPageType) {
 
     return (
         <div>
-            <div>
-                {pages.map( (p, i) => {
-                    return <span onClick={() => {props.onPageChanged(p)}}
-                                 className={props.currentPage === p
-                                     ? `${styles.current_page} ${styles.page_number}`
-                                     : styles.page_number}>{p},
-                    </span>
-                })}
-            </div>
-            {props.users.map((u: any) => {
-                    return (
-                        <div key={u.id} className={styles.user_item}>
-                            <div className={styles.user}>
-                                <NavLink to={'/profile/' + u.id}>
-                                <img className={styles.avatar} src={u.photos.small !== null ? u.photos.small : userAva}
-                                     alt=""/>
-                                </NavLink>
-                                {u.followed
-                                    ? <button disabled={props.followingInProgress.some( (id:number) => id === u.id)}
-                                              onClick={() => {props.unFollow(u.id)}}
-                                              className={props.followingInProgress.some( (id:number) => id === u.id)
-                                                  ? `${styles.button} ${styles.disabled}`
-                                                  : styles.button}>Unfollow</button>
-                                    : <button disabled={props.followingInProgress.some( (id:number) => id === u.id)}
-                                              onClick={() => {props.follow(u.id)}}
-                                              className={props.followingInProgress.some( (id:number) => id === u.id)
-                                                  ? `${styles.button} ${styles.disabled}`
-                                                  : styles.button}> Follow </button>}
-                            </div>
-                            <div className={styles.user_description}>
-                                <div className={styles.name}>
-                                    <h3>{u.name}</h3>
-                                    <span>Status: {u.status}</span>
-                                </div>
-                                <div className={styles.location}>
-                                    <div>Country: {"u.location.country"}</div>
-                                    <div>City: {"u.location.city"}</div>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                }
-            )
-            }
+            <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
+                       totalUserCount={totalUserCount} pageSize={pageSize}/>
+            {users.map((u: any) =>
+                    <User key={u.id}
+                                         user={u}
+                                         followingInProgress={props.followingInProgress}
+                                         follow={props.follow}
+                                         unFollow={props.unFollow}
+            />
+            )}
         </div>
     )
-
 }
 
 export default Users;
