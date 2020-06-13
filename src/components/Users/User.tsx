@@ -36,10 +36,10 @@ function User({user, followingInProgress, unFollow, follow}: any) {
                     <h3>{user.name}</h3>
                     <span>Status: {user.status}</span>
                 </div>
-                <div className={styles.location}>
-                    <div>Country: {"user.location.country"}</div>
-                    <div>City: {"user.location.city"}</div>
-                </div>
+                {/*<div className={styles.location}>*/}
+                {/*    <div>Country: {"user.location.country"}</div>*/}
+                {/*    <div>City: {"user.location.city"}</div>*/}
+                {/*</div>*/}
             </div>
         </div>
     )

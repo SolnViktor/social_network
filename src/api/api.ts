@@ -24,6 +24,19 @@ export const profileAPI = {
     updateStatus (status: any) {
         return instance.put(`profile/status/`, {status : status});
     },
+    loadPhoto (photo: any) {
+        let data = new FormData();
+        data.append("image", photo)
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+        return instance.put(`profile/photo`, data, config)
+    },
+    updateProfile (formData: any) {
+        debugger
+        return instance.put(`profile/`, formData); // Важно !! formData а не {formData}   !!
+    },
+
 }
 
 export const userAPI = {

@@ -1,0 +1,53 @@
+.header {
+  height: 70px;
+  margin: 0 0 15px 0;
+  background-color: cadetblue;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  .logo_img {
+    height: 100%;
+  }
+
+  .login_block {
+    align-self: center;
+    color: #fff;
+    text-align: center;
+
+
+    & a {
+      color: white;
+      text-decoration: none;
+    }
+
+    & a:hover {
+      color: black;
+    }
+
+    .button {
+      width: 70px;
+      margin-top: 10px;
+      cursor: pointer;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      background: black;
+
+      &:active,
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        transition: .2s;
+        color: #c75c5c;
+        background: #4e4949;
+      }
+    }
+  }
+}
+
+
+
+

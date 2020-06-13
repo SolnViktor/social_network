@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, Route, withRouter} from 'react-router-dom';
+import {HashRouter, Route, withRouter} from 'react-router-dom';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from './components/Settings/Settings';
@@ -53,7 +53,7 @@ class App extends React.Component<any, any> {
                                        render={() => <Music/>}/>
                                 <Route path='/settings'
                                        render={() => <Settings/>}/>
-                                <Route path='/login'
+                                <Route path='/'
                                        render={() => <Login/>}/>
                             </div>
                         </div>
@@ -74,13 +74,13 @@ let AppContainer = compose<any>(
 
 let MainApp = () => {
     return (
-        <BrowserRouter>
+        <HashRouter >
             <Provider store={store}>
                 <React.StrictMode>
                     <AppContainer/>
                 </React.StrictMode>
             </Provider>
-        </ BrowserRouter>
+        </ HashRouter>
     )
 }
 export default MainApp;

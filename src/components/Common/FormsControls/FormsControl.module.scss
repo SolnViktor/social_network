@@ -1,4 +1,7 @@
 .formControl {
+  & input {
+    border: 2px solid mediumslateblue;
+  }
 
   & textarea {
     border: 2px solid mediumslateblue;

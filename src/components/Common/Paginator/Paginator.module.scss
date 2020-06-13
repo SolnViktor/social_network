@@ -2,15 +2,42 @@
   display: flex;
   justify-content: center;
   margin: 10px 0;
+  .btn {
+    color: white;
+    background: black;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    &:hover {
+      transition: .2s;
+      color: #c75c5c;
+      background: #4e4949;
+    }
+    &.disabled {
+      opacity: 0.9;
+      background: slategrey;
+      color: #fff;
+      cursor: default;
+    }
+
+  }
 
   .page_number {
     cursor: pointer;
+    background: #3770ab;
+    border: 1px solid black;
+    outline: none;
+    font-size: 11px;
+    width: 25px;
+    padding: 2px 3px;
   }
 
   .current_page {
     font-weight: bold;
+    background: #4e4949;
   }
 }
+
 
 
 

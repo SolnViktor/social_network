@@ -1,0 +1,114 @@
+.profile {
+  font-size: 23px;
+  display: flex;
+
+  .avatar {
+    margin: 15px;
+
+    .ava__img {
+      height: 300px;
+      width: 300px;
+      display: block;
+    }
+
+    .btn {
+      margin-top: 10px;
+
+      .btn_hide {
+        display: none;
+      }
+
+      .custom_btn {
+        font-size: 15px;
+        cursor: pointer;
+        border: 2px solid black;
+        padding: 5px 10px;
+        background: mediumslateblue;
+        color: black;
+        transition: 0.3s linear;
+      }
+
+      .custom_btn:hover {
+        background: #f1df88;
+      }
+    }
+  }
+
+  .description {
+    width: 100%;
+    margin: 15px;
+
+    .btn_container {
+      display: flex;
+      justify-content: flex-end;
+      .custom_btn {
+        font-size: 15px;
+        cursor: pointer;
+        border: 2px solid black;
+        padding: 5px 10px;
+        background: mediumslateblue;
+        color: black;
+        transition: 0.3s linear;
+      }
+
+      .custom_btn:hover {
+        background: #f1df88;
+      }
+    }
+
+    .line {
+      height: 2px;
+      border: none;
+      background-color: black;
+      margin-top: 0;
+    }
+    .checkbox {
+      display: inline-block;
+      margin-left: 15px;
+    }
+
+    .icon__search {
+      font-size: 25px;
+      padding-left: 10px;
+      color: yellowgreen;
+    }
+
+    .icon__stop {
+      font-size: 25px;
+      padding-left: 10px;
+      color: grey;
+    }
+
+    .contacts {
+      margin-top: 30px;
+
+      .icon {
+        font-size: 30px;
+        padding-left: 20px;
+        color: #3770ab;
+      }
+
+      .icon:hover {
+        transition: .3s;
+        color: #8735a9;
+      }
+    }
+  }
+}
+
+
+.status {
+  color: slategrey;
+}
+
+
+
+
+
+
+
+
+
+
+
+

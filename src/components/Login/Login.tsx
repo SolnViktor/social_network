@@ -1,12 +1,15 @@
 import React from 'react';
-import {reduxForm, Field} from 'redux-form'
+import {reduxForm} from 'redux-form'
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {Input, createField} from "../Common/FormsControls/FormsControl";
 import {required} from "../../utils/validators/validators";
 import {Redirect} from 'react-router-dom';
 import {RootState} from "../../redux/redux-store";
-import styles from "../Common/FormsControls/FormsControl.module.scss"
+import stylesFC from "../Common/FormsControls/FormsControl.module.scss";
+import btn from "../../styles/Button.module.scss"
+import styles from './Login.module.scss'
+
 
 
 const Login = (props: any) => {
@@ -20,9 +23,12 @@ const Login = (props: any) => {
     }
 
     return (
-        <div>
-            <h1>LOGIN</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+        <div className={styles.content}>
+            <h1 className={styles.title}>LOGIN</h1>
+            <div className={styles.form} >
+                <LoginReduxForm onSubmit={onSubmit}/>
+            </div>
+
         </div>
     )
 }
@@ -31,12 +37,12 @@ const LoginForm = ({handleSubmit, error}: any) => {
     return (
         <form onSubmit={handleSubmit}>
 
-            {error && <div className={styles.errorMessage}>{error}</div>}
+            {error && <div className={stylesFC.errorMessage}>{error}</div>}
             {createField("Email", "email", [required], Input, null)}     {/* Forms вынесли в formsContorl.tsx*/}
             {createField("Password", "password", [required], Input, {type: "password"})}
             {createField(null, "rememberMe", null, Input, {type: "checkbox"}, "remember Me")}
             <div>
-                <button>Login</button>
+                <button className={btn.button}>Login</button>
             </div>
         </form>
     )

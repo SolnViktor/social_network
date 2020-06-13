@@ -1,19 +1,12 @@
-.blog {
-    padding: 10px;
-}
-
-.title {
-    padding-bottom: 10px;
-}
-
 .button {
     border: 2px solid black;
     padding: 5px 10px;
     margin: 5px 0;
     background: mediumslateblue;
     color: black;
-}
+    transition: 0.3s linear;
 
-.posts {
-    padding-top: 10px;
+&:hover {
+     background: #f1df88;
+ }
 }

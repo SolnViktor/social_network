@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styles from "./Paginator.module.scss"
 
 
+
 function Paginator({totalUserCount, pageSize, onPageChanged, currentPage, portionPages}: any) {
 
 
@@ -24,6 +25,9 @@ function Paginator({totalUserCount, pageSize, onPageChanged, currentPage, portio
     return (
         <div className={styles.paginator}>
             <button
+                className={currentPortion === 1
+                    ? `${styles.btn} ${styles.disabled}`
+                    : styles.btn }
                 disabled={currentPortion === 1}
                 onClick={prewPage}>
                 Prev
@@ -41,6 +45,9 @@ function Paginator({totalUserCount, pageSize, onPageChanged, currentPage, portio
                     )
                 })}
             <button
+                className={currentPortion === portionsMaxCount
+                    ? `${styles.btn} ${styles.disabled}`
+                    : styles.btn }
                 disabled={currentPortion === portionsMaxCount}
                 onClick={nextPage}>
                 Next

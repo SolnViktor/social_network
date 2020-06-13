@@ -1,0 +1,23 @@
+.button {
+  width: 70px;
+  margin-top: 10px;
+  cursor: pointer;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  background: black;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    transition: .2s;
+    color: #c75c5c;
+    background: #4e4949;
+  }
+}
+
+
+

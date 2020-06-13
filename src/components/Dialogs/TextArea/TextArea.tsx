@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './TextArea.module.css';
+import styles from './TextArea.module.scss';
 import {Field, reduxForm} from 'redux-form'
 import {Textarea} from "../../Common/FormsControls/FormsControl";
 import {maxLengthCreator, required} from "../../../utils/validators/validators";

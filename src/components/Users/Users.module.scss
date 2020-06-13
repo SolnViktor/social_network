@@ -50,6 +50,8 @@
 
     .name {
       flex-grow: 1;
+      max-width: 793px;
+      overflow: hidden;
     }
 
     .location {

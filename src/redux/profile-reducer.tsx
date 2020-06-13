@@ -1,6 +1,7 @@
 import {PostType} from "./store";
 import {v1} from "uuid";
 import {profileAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = 'ADD-POST';
 const ADD_LIKE = 'ADD-LIKE';
@@ -9,6 +10,8 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const IS_FETCHING = 'IS_FETCHING';
 const SET_STATUS = 'SET_STATUS';
 const DELETE_POST = 'DELETE_POST';
+const SET_PHOTOS = 'profile-reducer/SET_PHOTOS'
+
 
 export type actionTypeProfile = {
     type: string
@@ -18,6 +21,7 @@ export type actionTypeProfile = {
     progress: boolean
     status: string
     newPost: string
+    photos: any
 }
 
 let initialState = {
@@ -28,7 +32,8 @@ let initialState = {
     ],
     profile: null,
     isFetching: true,
-    status: ''
+    status: '',
+
 }
 export type ProfilePageType = {
     post: Array<PostType>
@@ -80,6 +85,13 @@ function profileReducer(state: ProfilePageType = initialState, action: actionTyp
                 post: state.post.filter((p: any) => p.id !== action.id)
             }
         }
+        case SET_PHOTOS: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}
+            }
+        }
+
         default:
             return state;
     }
@@ -93,6 +105,8 @@ export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profil
 export const userIsFetching = (progress: boolean) => ({type: IS_FETCHING, progress})
 export const setStatus = (status: any) => ({type: SET_STATUS, status})
 export const deletePost = (id: any) => ({type: DELETE_POST, id})
+export const setPhotosSuccessfull = (photos: any) => ({type: SET_PHOTOS, photos})
+
 
 export const getStatus = (userId: any) => async (dispatch: any) => {
     let response = await profileAPI.getStatus(userId);
@@ -110,6 +124,28 @@ export const getUser = (userId: any) => async (dispatch: any) => {
     let response = await profileAPI.getUserProfileFromId(userId);
     dispatch(userIsFetching(false));
     dispatch(setUserProfile(response));
+}
+
+export const loadPhoto = (photo: any) => async (dispatch: any) => {
+    debugger
+    let response = await profileAPI.loadPhoto(photo);
+    if (response.data.resultCode === 0) {
+        dispatch(setPhotosSuccessfull(response.data.data.photos));
+    }
+}
+export const saveProfile = (formData: any) => async (dispatch: any, getState: any) => {
+    debugger
+    const userId = getState().auth.id;
+    const response:any = await profileAPI.updateProfile(formData);
+    if (response.data.resultCode === 0) {
+        debugger
+       dispatch(getUser(userId));
+    } else {
+        debugger
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
+        dispatch(stopSubmit('edit-profile', {_error: message}))
+        return Promise.reject(message);
+    }
 }
 
 

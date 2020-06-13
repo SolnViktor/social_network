@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./MyPosts.module.css"
+import styles from "./MyPosts.module.scss"
 import Post from "./Post/Post";
 import {Field, reduxForm} from 'redux-form'
 import {maxLengthCreator, required} from '../../../utils/validators/validators'
@@ -59,7 +59,6 @@ const PostsForm = (props: any) => {
                 <Field
                     name={"post"}
                     component={Textarea}
-                    className={styles.area}
                     validate={[required, maxLength10]}
                 />
                 <button className={styles.button}>Add Post</button>
