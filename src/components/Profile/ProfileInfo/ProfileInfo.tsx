@@ -4,7 +4,7 @@ import Preloader from "../../Common/Preloader/Preloader";
 import defaultAva from "../../../accets/default_users_ava/user_ava.jpg"
 import {ProfileData} from "./ProfileData";
 import ProfileDataReduxForm from "./ProfileDataForm";
-import stylesFC from "../../Common/FormsControls/FormsControl.module.scss";
+
 
 
 type ProfileInfoType = {
@@ -24,7 +24,7 @@ type ProfileInfoType = {
     saveProfile: any
 }
 
-const ProfileInfo = ({profile, status, updateStatus, isOwner, loadPhoto, saveProfile}: any) => {
+const ProfileInfo = ({profile, status, updateStatus, isOwner, loadPhoto, saveProfile}: ProfileInfoType) => {
     let [editMode, setEditMode] = useState (false);
     const activateEditMode = () => {
         setEditMode(true);
@@ -42,7 +42,6 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, loadPhoto, savePro
         }
     }
     const onSubmit = (formData: any) => {
-        debugger
         saveProfile(formData).then( () => {
             deactivateEditMode();
             }

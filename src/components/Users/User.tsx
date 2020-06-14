@@ -1,9 +1,7 @@
 import React from 'react';
-import {UsersType} from "../../redux/users-reducer";
 import styles from "./Users.module.scss"
 import userAva from '../../accets/default_users_ava/user_ava.jpg'
 import {NavLink} from 'react-router-dom';
-import Paginator from "../Common/Paginator/Paginator";
 
 
 function User({user, followingInProgress, unFollow, follow}: any) {

@@ -1,7 +1,5 @@
 import styles from "./ProfileInfo.module.scss";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFacebookF, faGithubSquare, faInstagram, faTwitter, faVk} from "@fortawesome/free-brands-svg-icons";
 import React from "react";
 import {createField, Input, Textarea} from "../../Common/FormsControls/FormsControl";
 import {reduxForm} from 'redux-form'

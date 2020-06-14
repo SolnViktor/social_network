@@ -1,4 +1,3 @@
-import {StoreDispatch} from "./redux-store";
 import {auth} from "./auth-reducer";
 
 

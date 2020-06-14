@@ -91,7 +91,6 @@ function profileReducer(state: ProfilePageType = initialState, action: actionTyp
                 profile: {...state.profile, photos: action.photos}
             }
         }
-
         default:
             return state;
     }
@@ -113,9 +112,13 @@ export const getStatus = (userId: any) => async (dispatch: any) => {
     dispatch(setStatus(response));
 }
 export const updateStatus = (status: any) => async (dispatch: any) => {
-    let response = await profileAPI.updateStatus(status);
-    if (response.data.resultCode === 0) {
-        dispatch(setStatus(status));
+    try {
+        let response = await profileAPI.updateStatus(status);
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(status));
+        }
+    } catch (error) {
+
     }
 }
 
@@ -127,21 +130,17 @@ export const getUser = (userId: any) => async (dispatch: any) => {
 }
 
 export const loadPhoto = (photo: any) => async (dispatch: any) => {
-    debugger
     let response = await profileAPI.loadPhoto(photo);
     if (response.data.resultCode === 0) {
         dispatch(setPhotosSuccessfull(response.data.data.photos));
     }
 }
 export const saveProfile = (formData: any) => async (dispatch: any, getState: any) => {
-    debugger
     const userId = getState().auth.id;
-    const response:any = await profileAPI.updateProfile(formData);
+    const response: any = await profileAPI.updateProfile(formData);
     if (response.data.resultCode === 0) {
-        debugger
-       dispatch(getUser(userId));
+        dispatch(getUser(userId));
     } else {
-        debugger
         let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error"
         dispatch(stopSubmit('edit-profile', {_error: message}))
         return Promise.reject(message);
