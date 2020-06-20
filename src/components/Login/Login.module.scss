@@ -1,11 +1,21 @@
 .content {
   height: 82vh;
+
+  .title {
+    text-align: center;
+  }
+
+  .form {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+
+    .btn_container {
+      text-align: center;
+    }
+    .input {
+      margin-bottom: 5px;
+    }
+  }
 }
-.title{
-  margin-left: 10px;
-}
-.form {
-  display: flex;
-  justify-content: center;
-  padding: 50px 0;
-}
+

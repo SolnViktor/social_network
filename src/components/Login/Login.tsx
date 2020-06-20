@@ -24,7 +24,7 @@ const Login = (props: any) => {
 
     return (
         <div className={styles.content}>
-            <h1 className={styles.title}>LOGIN</h1>
+            <h1 className={styles.title}>Authorization</h1>
             <div className={styles.form} >
                 <LoginReduxForm captchaUrl={props.captchaUrl} onSubmit={onSubmit}/>
             </div>
@@ -38,17 +38,17 @@ const LoginForm = ({handleSubmit, error, captchaUrl}: any) => {
         <form onSubmit={handleSubmit}>
 
             {error && <div className={stylesFC.errorMessage}>{error}</div>}
-            {createField("Email", "email", [required], Input, null)}     {/* Forms вынесли в formsContorl.tsx*/}
-            {createField("Password", "password", [required], Input, {type: "password"})}
-            {createField(null, "rememberMe", null, Input, {type: "checkbox"}, "remember Me")}
+            <div className={styles.input}>{createField("Email", "email", [required], Input, null)} </div>    {/* Forms вынесли в formsContorl.tsx*/}
+            <div className={styles.input}> {createField("Password", "password", [required], Input, {type: "password"})} </div>
+             {createField(null, "rememberMe", null, Input, {type: "checkbox"}, "Remember me")}
             {captchaUrl
             && <div><img src={captchaUrl} alt="captcha"/>
                 {createField("Enter symbols", "captcha", [required], Input, null)}
             </div>
 
             }
-            <div>
-                <button className={btn.button}>Login</button>
+            <div className={styles.btn_container}>
+                <button className={`${btn.button} ${styles.button}`}>Login</button>
             </div>
         </form>
     )
