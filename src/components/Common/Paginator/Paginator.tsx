@@ -35,7 +35,8 @@ function Paginator({totalUserCount, pageSize, onPageChanged, currentPage, portio
             {pages.filter(pageNumber => pageNumber >= portionStartPage && pageNumber <= portionLastPage)
                 .map(pageNumber => {
                     return (
-                        <button onClick={() => {
+                        <button key={pageNumber}
+                                onClick={() => {
                             onPageChanged(pageNumber)
                         }}
                                 className={currentPage === pageNumber

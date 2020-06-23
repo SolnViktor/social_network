@@ -40,7 +40,7 @@ export const profileAPI = {
 
 export const userAPI = {
     getUsers(currentPage: any = 1, pageSize: any = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+        return instance.get(`users?sortOrder=asc&page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data
             } )
