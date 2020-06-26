@@ -57,12 +57,15 @@ class App extends React.Component<any, any> {
                                            render={withSuspense(DialogsContainer)}/>
                                     <Route path='/users'
                                            render={() => <UsersContainer/>}/>
-                                    <Route path='/news'
-                                           render={() => <News/>}/>
-                                    <Route path='/music'
-                                           render={() => <Music/>}/>
-                                    <Route path='/settings'
-                                           render={() => <Settings/>}/>
+                                    <Route path='/news'>
+                                        {!this.props.isAuth ? <Redirect to="/login" /> : <News/>}
+                                    </Route>
+                                    <Route path='/music'>
+                                        {!this.props.isAuth ? <Redirect to="/login" /> : <Music/>}
+                                    </Route>
+                                    <Route path='/settings'>
+                                        {!this.props.isAuth ? <Redirect to="/login" /> : <Settings/>}
+                                    </Route>
                                     <Route path='/login'
                                            render={() => <Login/>}/>
                                     <Route path='*'
@@ -78,7 +81,8 @@ class App extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-    initialized: state.app.initialized
+    initialized: state.app.initialized,
+    isAuth: state.auth.isAuth
 })
 
 let AppContainer = compose<any>(
