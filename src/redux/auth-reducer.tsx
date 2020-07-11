@@ -9,34 +9,28 @@ const GET_CAPTCHA_URL_SUCCESS = 'social-network/auth/GET_CAPTCHA_URL_SUCCESS';
 
 
 
-export type actionTypeAuth = {
+export type AuthActionType = {
     type: string
     payload: { id: number | null, email: string, login: string }
     isFetching: boolean
     isAuth: boolean
     id: number
-    captchaUrl: any
+    captchaUrl: string
 }
-export type AuthStateType = {
-    id: number | null,
-    email: string | null,
-    login: any
-    isAuth: any
-    isFetching: any
-    captchaUrl: any
-}
+
+export type AuthStateType = typeof initialState
 
 let initialState = {
-    id: null,
-    email: null,
-    login: null,
+    id: null as number | null,
+    email: null as string | null,
+    login: null as string | null | number,
     isAuth: false,
     isFetching: true,
-    captchaUrl: null,
+    captchaUrl: null as string | null,
 }
 
 
-function authReducer(state: AuthStateType = initialState, action: actionTypeAuth) {
+function authReducer(state = initialState, action: AuthActionType):AuthStateType {
 
     switch (action.type) {
         case SET_USER_DATA:
@@ -52,12 +46,12 @@ function authReducer(state: AuthStateType = initialState, action: actionTypeAuth
         case LOGIN:
             return {
                 ...state,
-                login: action.id
+                login: action.id,
             }
         case GET_CAPTCHA_URL_SUCCESS:
             return {
                 ...state,
-                ...action.payload
+                ...action.payload,
             }
 
         default:
@@ -65,16 +59,36 @@ function authReducer(state: AuthStateType = initialState, action: actionTypeAuth
     }
 }
 
-export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => {
+type SetAuthUserDataPayloadType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
+type SetAuthUserDataActionType = {
+    type: typeof SET_USER_DATA
+    payload: SetAuthUserDataPayloadType
+}
+
+export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean):SetAuthUserDataActionType => {
     return {
         type: SET_USER_DATA,
         payload: {id, email, login, isAuth},
     }
 }
-export const getCaptchaUrlSuccess = (captchaUrl: any) => ({type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}})
 
-export const authIsFetching = (isFetching: boolean) => ({type: FETCHING, isFetching})
-export const loginId = (id: any) => ({type: LOGIN, id})
+type GetCaptchaUrlSuccessActionType = {
+    type: typeof GET_CAPTCHA_URL_SUCCESS
+    payload: {captchaUrl: string | null}
+}
+export const getCaptchaUrlSuccess = (captchaUrl: string | null):GetCaptchaUrlSuccessActionType => ({type: GET_CAPTCHA_URL_SUCCESS, payload: {captchaUrl}})
+type AuthIsFetchingActionType = {
+    type: typeof FETCHING
+    isFetching: boolean
+}
+export const authIsFetching = (isFetching: boolean):AuthIsFetchingActionType => ({type: FETCHING, isFetching})
+type LoginIdActionType = {type: typeof LOGIN, id: string}
+export const loginId = (id: string):LoginIdActionType => ({type: LOGIN, id})
 
 export const auth = () => async (dispatch: StoreDispatch) => {
     dispatch(authIsFetching(true));
@@ -87,7 +101,7 @@ export const auth = () => async (dispatch: StoreDispatch) => {
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: any) => async (dispatch: any) => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
     let response = await authAPI.authLogin(email, password, rememberMe, captcha);
     if (response.resultCode === 0) {
         dispatch(loginId(response.data.userId))
@@ -101,14 +115,14 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     }
 }
 
-export const getCaptchaUrl = () => async (dispatch: any) => {
+export const getCaptchaUrl = () => async (dispatch: StoreDispatch) => {
     let response = await securityAPI.getCaptcha();
     const captchaUrl = response.data.url;
     dispatch(getCaptchaUrlSuccess(captchaUrl));
 
 }
 
-export const logout = () => async (dispatch: any) => {
+export const logout = () => async (dispatch: StoreDispatch) => {
     let response = await authAPI.authLogout();
     if (response.data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false));

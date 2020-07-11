@@ -1,4 +1,3 @@
-import {DialogsType, MessagesType} from "./store";
 import {v1} from "uuid";
 
 const ADD_MESSAGE: string = 'ADD-MESSAGE';
@@ -9,11 +8,10 @@ export type ActionTypeDialogs = {
     message: string
     newDialogMessage: string
 }
-export type MessagesPageType = {
-    dialogs: Array<DialogsType>
-    messages:Array<MessagesType>
-}
 
+type InitialStateType = typeof initialState
+type DialogsType = {id:string, name: string}
+type MessagesType = {id: string, messages: string}
 let initialState = {
     dialogs: [
         {id: v1(), name: "Viktor"},
@@ -22,37 +20,29 @@ let initialState = {
         {id: v1(), name: "Semen"},
         {id: v1(), name: "Timofey"},
         {id: v1(), name: "Andrew"}
-    ],
+    ] as Array<DialogsType>,
     messages: [
         {id: v1(), messages: "Hi"},
         {id: v1(), messages: "How about play footble tomorrow?"},
         {id: v1(), messages: "Ye, go"},
-    ]
+    ] as Array<MessagesType>
 }
 
-function dialogsReducer(state: MessagesPageType = initialState, action: ActionTypeDialogs) {
+function dialogsReducer(state = initialState, action: ActionTypeDialogs):InitialStateType  {
 
     switch (action.type) {
         case ADD_MESSAGE:
             return {
                 ...state,
-                newMessageText: '',
-                messages: [...state.messages, {id: v1(), messages: action.newDialogMessage}]
+                messages: [...state.messages, {id: v1(), messages: action.newDialogMessage}],
             }
         default:
             return state;
     }
 }
 
-interface AddMessageActionCreatorType {
-    type: typeof ADD_MESSAGE
-    newDialogMessage: string
-}
-
-
-export type MessageActionCreatorType = AddMessageActionCreatorType
-
-export function addMessageActionCreator(newDialogMessage: string): MessageActionCreatorType {
+type AddMessageActionCreatorType = {type: typeof ADD_MESSAGE, newDialogMessage: string}
+export function addMessageActionCreator(newDialogMessage: string): AddMessageActionCreatorType {
     return {type: ADD_MESSAGE, newDialogMessage}
 }
 

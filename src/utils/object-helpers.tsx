@@ -1,8 +1,9 @@
+import {UsersType} from '../types/types';
 
+type newObjProps = {followed:boolean}
+export const updateObjectInArray = (items: Array<UsersType>, itemId: string, objPropName: 'id', newObjProps: newObjProps) => {
 
-export const updateObjectInArray = (items: any, itemId: any, objPropName: any, newObjProps: any) => {
-
-    return items.map( (u:any) => {
+    return items.map( (u:UsersType) => {
         if (u[objPropName] === itemId) {
             return {...u, ...newObjProps}
         }

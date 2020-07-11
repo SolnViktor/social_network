@@ -5,13 +5,12 @@ import styles from "./Paginator.module.scss"
 
 function Paginator({totalUserCount, pageSize, onPageChanged, currentPage, portionPages}: any) {
 
-
-    let pagesCount = Math.ceil(totalUserCount / pageSize);
-    let portionsMaxCount = Math.ceil(pagesCount / portionPages);
-    let [currentPortion, setCurrentPortion] = useState(1);
+    let pagesCount = Math.ceil(totalUserCount / pageSize)
+    let portionsMaxCount = Math.ceil(pagesCount / portionPages)
+    let [currentPortion, setCurrentPortion] = useState(1)
     let portionStartPage = (currentPortion - 1) * portionPages + 1
     let portionLastPage = currentPortion * portionPages
-    let pages = [];
+    let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
