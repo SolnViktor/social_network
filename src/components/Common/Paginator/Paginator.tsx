@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
 import styles from "./Paginator.module.scss"
 
+type PaginatorPropsType = {
+    totalUserCount: number
+    pageSize: number
+    onPageChanged: (pageNumber: number) => void
+    currentPage: number
+    portionPages: number
+}
 
-
-function Paginator({totalUserCount, pageSize, onPageChanged, currentPage, portionPages}: any) {
+const Paginator: React.FC<PaginatorPropsType> = ({totalUserCount, pageSize, onPageChanged, currentPage, portionPages} ) => {
 
     let pagesCount = Math.ceil(totalUserCount / pageSize)
     let portionsMaxCount = Math.ceil(pagesCount / portionPages)

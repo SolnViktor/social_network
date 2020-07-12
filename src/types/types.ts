@@ -23,7 +23,7 @@ export type PhotosType = {
 
 export type UsersType = {
     name: string
-    id: string
+    id: number
     photos: PhotosType
     followed: boolean
     status: string

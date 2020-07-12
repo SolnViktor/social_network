@@ -1,6 +1,6 @@
-import {authAPI, securityAPI} from "../api/api";
-import {stopSubmit} from "redux-form";
-import {StoreDispatch} from "./redux-store";
+import {authAPI, ResultCodeForCaptcha, ResultCodesEnum, securityAPI} from '../api/api';
+import {stopSubmit} from 'redux-form';
+import {StoreDispatch} from './redux-store';
 
 const SET_USER_DATA = 'social-network/auth/SET_USER_DATA';
 const FETCHING = 'social-network/auth/FETCHING';
@@ -87,14 +87,14 @@ type AuthIsFetchingActionType = {
     isFetching: boolean
 }
 export const authIsFetching = (isFetching: boolean):AuthIsFetchingActionType => ({type: FETCHING, isFetching})
-type LoginIdActionType = {type: typeof LOGIN, id: string}
-export const loginId = (id: string):LoginIdActionType => ({type: LOGIN, id})
+type LoginIdActionType = {type: typeof LOGIN, id: number}
+export const loginId = (id: number):LoginIdActionType => ({type: LOGIN, id})
 
 export const auth = () => async (dispatch: StoreDispatch) => {
     dispatch(authIsFetching(true));
     let response = await authAPI.authMe();
     dispatch(authIsFetching(false));
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         let {id, email, login} = response.data;
         dispatch(setAuthUserData(id, email, login, true));
         dispatch(getCaptchaUrlSuccess(null))
@@ -103,11 +103,11 @@ export const auth = () => async (dispatch: StoreDispatch) => {
 
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
     let response = await authAPI.authLogin(email, password, rememberMe, captcha);
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(loginId(response.data.userId))
         dispatch(auth());
     } else {
-        if (response.resultCode === 10){
+        if (response.resultCode === ResultCodeForCaptcha.CaptchaIsRequired){
             dispatch(getCaptchaUrl());
         }
         let message = response.messages.length > 0 ? response.messages[0] : "Some error"

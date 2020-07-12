@@ -56,7 +56,7 @@ class App extends React.Component<any, any> {
                                     <Route path='/dialogs'
                                            render={withSuspense(DialogsContainer)}/>
                                     <Route path='/users'
-                                           render={() => <UsersContainer/>}/>
+                                           render={() => <UsersContainer />}/>
                                     <Route path='/news'>
                                         {!this.props.isAuth ? <Redirect to="/login" /> : <News/>}
                                     </Route>

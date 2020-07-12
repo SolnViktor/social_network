@@ -6,13 +6,13 @@ import { UsersType } from '../../types/types';
 
 type UsersPageType = {
     users: Array<UsersType>
-    follow: (userID: string) => void
-    unFollow: (userID: string) => void
+    follow: (userID: number) => void
+    unFollow: (userID: number) => void
     pageSize: number
     totalUserCount: number
     currentPage: number
     onPageChanged: (pageNumber: number) => void
-    followingInProgress: any
+    followingInProgress: Array<number>
     portionPages: number
 }
 
@@ -22,7 +22,7 @@ function Users({currentPage, onPageChanged, totalUserCount, pageSize, users, por
         <div>
             <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
                        totalUserCount={totalUserCount} pageSize={pageSize} portionPages={portionPages}/>
-            {users.map((u: any) =>
+            {users.map((u: UsersType) =>
                     <User key={u.id}
                                          user={u}
                                          followingInProgress={props.followingInProgress}
