@@ -1,4 +1,4 @@
-import preloader from "../../../accets/default_users_ava/loader.svg";
+import preloader from '../../../accets/Spinner-1s-200px.svg'
 import React from "react";
 import styles from './Preloader.module.css'
 

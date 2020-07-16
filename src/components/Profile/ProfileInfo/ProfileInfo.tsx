@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from './ProfileInfo.module.scss'
 import Preloader from "../../Common/Preloader/Preloader";
-import defaultAva from "../../../accets/default_users_ava/user_ava.jpg"
+import defaultAva from "../../../accets/default_ava.jpeg"
 import {ProfileData} from "./ProfileData";
 import ProfileDataReduxForm from "./ProfileDataForm";
 

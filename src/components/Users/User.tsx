@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "./Users.module.scss"
-import userAva from '../../accets/default_users_ava/user_ava.jpg'
+import userAva from '../../accets/default_ava.jpeg'
 import {NavLink} from 'react-router-dom';
 
 
